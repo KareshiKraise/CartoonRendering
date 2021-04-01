@@ -1,0 +1,31 @@
+#version 430
+
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec2 vertexUV;
+layout(location = 2) in vec3 vertexNormal;
+layout(location = 4) in vec3 Tangent; 
+
+uniform mat3 NormalMatrix;
+uniform vec3 CameraPos;
+uniform vec3 LightDirection;
+
+uniform mat4 P;
+uniform mat4 V;
+uniform mat4 M;
+
+
+out vec3 NORMAL;
+out vec2 UV;
+out vec3 toLight;
+out vec3 toEye;
+
+void main(void)
+{
+	gl_Position = P * V * M * vec4(vertexPosition, 1.0);
+	UV = vec2(vertexUV.x , 1 - vertexUV.y);
+
+	NORMAL = NormalMatrix * vertexNormal;
+	toLight = LightDirection - vertexPosition;
+	toEye = CameraPos - vertexPosition;
+	
+}

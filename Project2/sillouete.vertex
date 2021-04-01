@@ -1,0 +1,21 @@
+#version 430 core
+
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 2) in vec3 vertexNormal;
+
+uniform mat4 P;
+uniform mat4 M;
+uniform mat4 V;
+
+
+
+#define OFFSET_IN_NORMAL 0.65
+
+
+void main(void)
+{
+
+	vec3 norm = normalize(vertexNormal);
+	vec4 pos = vec4(vertexPosition + norm * 1.5 , 1.0);
+	gl_Position = P * V * M * pos;
+}
